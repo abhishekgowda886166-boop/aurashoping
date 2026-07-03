@@ -836,7 +836,7 @@ export default function Products({
             <button
               onClick={() => setSelectedProductIds([])}
               className="btn btn-secondary"
-              style={{ padding: '5px 15px', fontSize: '0.60rem', borderRadius: '8px' }}
+              style={{ padding: '10px 22px', fontSize: '0.80rem', borderRadius: '12px' }}
             >
               Cancel
             </button>
@@ -844,9 +844,9 @@ export default function Products({
               onClick={handleAddSelectedToCart}
               className="btn btn-primary"
               style={{
-                padding: '5px 15px',
-                fontSize: '0.60rem',
-                borderRadius: '8px',
+                padding: '10px 22px',
+                fontSize: '0.80rem',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px'

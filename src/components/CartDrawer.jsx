@@ -7,7 +7,8 @@ export default function CartDrawer({
   cartItems,
   onUpdateQuantity,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  onCheckout
 }) {
   const [checkoutStep, setCheckoutStep] = useState('idle'); // idle, address, confirm, processing, success
   const [paymentMethod, setPaymentMethod] = useState('mobile_banking');
@@ -28,7 +29,11 @@ export default function CartDrawer({
   const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleStartCheckout = () => {
-    setCheckoutStep('address');
+    if (onCheckout) {
+      onCheckout();
+    } else {
+      setCheckoutStep('address');
+    }
   };
 
   const handleAddressSubmit = () => {

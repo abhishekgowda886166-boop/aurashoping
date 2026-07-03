@@ -12,13 +12,14 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
 
   /* ──────── FORM FIELDS ──────── */
   const [showPassword, setShowPassword] = useState(false);
-  const [loginInput, setLoginInput]     = useState('');
+  const [loginInput, setLoginInput] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const [signUpName, setSignUpName]         = useState('');
+  const [signUpName, setSignUpName] = useState('');
   const [signUpUsername, setSignUpUsername] = useState('');
-  const [signUpEmail, setSignUpEmail]       = useState('');
-  const [signUpPhone, setSignUpPhone]       = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpPhone, setSignUpPhone] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
 
   /* ──────── OTP STATE ──────── */
@@ -30,7 +31,7 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
   const otpRefs = useRef([]);
 
   /* ──────── GLOBAL ──────── */
-  const [error, setError]     = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   /* ──── Countdown timer for resend ──── */
@@ -39,6 +40,18 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
     const t = setTimeout(() => setResendCountdown(c => c - 1), 1000);
     return () => clearTimeout(t);
   }, [resendCountdown]);
+
+  /* ──── Load saved user login input if Remember Me was checked ──── */
+  useEffect(() => {
+    const savedRemember = localStorage.getItem('aura_remember_me') === 'true';
+    if (savedRemember) {
+      setRememberMe(true);
+      const savedInput = localStorage.getItem('aura_remember_login_input');
+      if (savedInput) {
+        setLoginInput(savedInput);
+      }
+    }
+  }, []);
 
   /* ──── Helpers ──── */
   const launchOtp = (username) => {
@@ -125,6 +138,15 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
       setOtpDigits(['', '', '', '', '', '']);
       setTimeout(() => otpRefs.current[0]?.focus(), 50);
       return;
+    }
+    if (!isSignUp) {
+      if (rememberMe) {
+        localStorage.setItem('aura_remember_me', 'true');
+        localStorage.setItem('aura_remember_login_input', loginInput);
+      } else {
+        localStorage.removeItem('aura_remember_me');
+        localStorage.removeItem('aura_remember_login_input');
+      }
     }
     setStep('success');
     setTimeout(() => onLoginSuccess(pendingUsername), 1500);
@@ -397,6 +419,28 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
                   </div>
                 </div>
 
+                {/* Remember Me */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    checked={rememberMe}
+                    onChange={e => setRememberMe(e.target.checked)}
+                    disabled={loading}
+                    style={{
+                      width: '16px',
+                      height: '16px',
+                      borderRadius: '4px',
+                      border: '1px solid var(--border-color)',
+                      accentColor: 'var(--accent-primary)',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <label htmlFor="rememberMe" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer', userSelect: 'none' }}>
+                    Remember me on this device
+                  </label>
+                </div>
+
                 <button type="submit" className="btn btn-primary"
                   style={{ width: '100%', padding: '12px', borderRadius: '12px', fontSize: '0.95rem', fontWeight: 600, marginTop: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                   disabled={loading}
@@ -496,6 +540,7 @@ export default function Login({ onLoginSuccess, onBackToHome }) {
           100% { transform: rotate(360deg); }
         }
       `}</style>
+
     </section>
   );
 }
