@@ -1,10 +1,13 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import PromoAdBanner from './PromoAdBanner';
 
 export default function Hero({ onGetStarted }) {
   const handleGetStartedClick = () => {
     onGetStarted();
   };
+
+
 
   return (
     <section 
@@ -12,14 +15,16 @@ export default function Hero({ onGetStarted }) {
       className="container flex-center hero-section"
       style={{
         minHeight: 'calc(100vh - 80px)',
-        padding: '60px 0 80px 0',
+        padding: '20px 0 80px 0',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '48px'
+        gap: '36px'
       }}
     >
+      {/* Cyberpunk Promo Banner */}
+      <PromoAdBanner />
       {/* Centered Content */}
       <div 
         style={{
@@ -184,7 +189,10 @@ export default function Hero({ onGetStarted }) {
             }}
           >
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Aura Watch Pro</span>
-            <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--accent-secondary)' }}>$249.00</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontSize: '0.8rem', textDecoration: 'line-through', color: 'var(--text-muted)' }}>₹20,499</span>
+              <span style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--accent-secondary)' }}>₹17,424</span>
+            </div>
           </div>
         </div>
       </div>

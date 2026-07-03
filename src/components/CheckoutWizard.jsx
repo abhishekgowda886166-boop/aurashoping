@@ -41,6 +41,11 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
   const [upiDetails, setUpiDetails] = useState('');
   const [upiError, setUpiError] = useState('');
 
+  // Promo Code State
+  const [promoInput, setPromoInput] = useState('');
+  const [promoError, setPromoError] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState(null); // { code, label }
+
   // Order Tracker State
   const [trackerStage, setTrackerStage] = useState(0); // 0 to 4
   const autoSimTimer = useRef(null);
@@ -71,9 +76,35 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
 
   // Calculate pricing summary
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingFee = subtotal > 100 || subtotal === 0 ? 0 : 9.99;
-  const estimatedTax = subtotal * 0.08;
-  const totalAmount = subtotal + shippingFee + estimatedTax;
+
+  let promoDiscountAmt = 0;
+  if (appliedPromo) {
+    if (appliedPromo.code === 'WATCH15') {
+      const watchItem = cartItems.find(item => item.name.toLowerCase().includes('watch'));
+      if (watchItem) {
+        promoDiscountAmt = Math.round(watchItem.price * watchItem.quantity * 0.15);
+      }
+    } else if (appliedPromo.code === 'SOUND20') {
+      const soundItem = cartItems.find(item => item.name.toLowerCase().includes('sound') || item.name.toLowerCase().includes('headphone'));
+      if (soundItem) {
+        promoDiscountAmt = Math.round(soundItem.price * soundItem.quantity * 0.20);
+      }
+    } else if (appliedPromo.code === 'PHONE10') {
+      const phoneItem = cartItems.find(item => item.name.toLowerCase().includes('phone'));
+      if (phoneItem) {
+        promoDiscountAmt = Math.round(phoneItem.price * phoneItem.quantity * 0.10);
+      }
+    } else if (appliedPromo.code === 'AURA40') {
+      const accItems = cartItems.filter(item => item.category === 'Accessories');
+      const accSubtotal = accItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      promoDiscountAmt = Math.round(accSubtotal * 0.40);
+    }
+  }
+
+  const discountedSubtotal = Math.max(0, subtotal - promoDiscountAmt);
+  const shippingFee = discountedSubtotal > 8000 || subtotal === 0 ? 0 : 500;
+  const estimatedTax = Math.round(discountedSubtotal * 0.18); // 18% GST
+  const totalAmount = discountedSubtotal + shippingFee + estimatedTax;
 
   // Formatting inputs
   const handlePhoneChange = (e) => {
@@ -194,6 +225,47 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
     } else {
       setIsShippingShaking(true);
       setTimeout(() => setIsShippingShaking(false), 600);
+    }
+  };
+
+  const handleApplyPromo = () => {
+    const code = promoInput.trim().toUpperCase();
+    if (!code) return;
+
+    if (code === 'WATCH15') {
+      const hasWatch = cartItems.some(item => item.name.toLowerCase().includes('watch'));
+      if (hasWatch) {
+        setAppliedPromo({ code, label: '15% Extra Watch Discount' });
+        setPromoError('');
+      } else {
+        setPromoError('Aura Watch Pro is required in the cart to apply this code!');
+      }
+    } else if (code === 'SOUND20') {
+      const hasSound = cartItems.some(item => item.name.toLowerCase().includes('sound') || item.name.toLowerCase().includes('headphone'));
+      if (hasSound) {
+        setAppliedPromo({ code, label: '20% Extra Audio Discount' });
+        setPromoError('');
+      } else {
+        setPromoError('Aura Sound Max is required in the cart to apply this code!');
+      }
+    } else if (code === 'PHONE10') {
+      const hasPhone = cartItems.some(item => item.name.toLowerCase().includes('phone'));
+      if (hasPhone) {
+        setAppliedPromo({ code, label: '10% Extra Phone Discount' });
+        setPromoError('');
+      } else {
+        setPromoError('Aura Phone Pro is required in the cart to apply this code!');
+      }
+    } else if (code === 'AURA40') {
+      const hasAcc = cartItems.some(item => item.category === 'Accessories');
+      if (hasAcc) {
+        setAppliedPromo({ code, label: '40% Extra Accessories Discount' });
+        setPromoError('');
+      } else {
+        setPromoError('At least one Accessory item is required to apply this code!');
+      }
+    } else {
+      setPromoError('Invalid coupon code!');
     }
   };
 
@@ -648,7 +720,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                             className="btn btn-primary flex-center"
                             style={{ width: '100%', padding: '14px', borderRadius: '12px', fontWeight: 600 }}
                           >
-                            Confirm & Pay ${totalAmount.toFixed(2)}
+                            Confirm & Pay ₹{totalAmount.toLocaleString('en-IN')}
                           </button>
                         </div>
                       </form>
@@ -750,7 +822,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                           className="btn btn-primary flex-center"
                           style={{ width: '100%', padding: '14px', borderRadius: '12px', fontWeight: 600 }}
                         >
-                          Send Request & Pay ${totalAmount.toFixed(2)}
+                          Send Request & Pay ₹{totalAmount.toLocaleString('en-IN')}
                         </button>
                       </div>
                     </form>
@@ -804,7 +876,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                           className="btn btn-primary flex-center"
                           style={{ width: '100%', padding: '14px', borderRadius: '12px', fontWeight: 600 }}
                         >
-                          Place Order (COD) - ${totalAmount.toFixed(2)}
+                          Place Order (COD) - ₹{totalAmount.toLocaleString('en-IN')}
                         </button>
                       </div>
                     </form>
@@ -967,7 +1039,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                             <Wallet size={14} /> Cash on Delivery
                           </p>
                           <p>Doorstep Handover</p>
-                          <p>Due: ${totalAmount.toFixed(2)}</p>
+                          <p>Due: ₹{totalAmount.toLocaleString('en-IN')}</p>
                           <p>Status: PENDING HANDOVER</p>
                         </>
                       )}
@@ -986,7 +1058,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                             {item.name} <strong style={{ color: 'var(--accent-secondary)' }}>x{item.quantity}</strong>
                           </span>
                           <span style={{ fontWeight: 700 }}>
-                            ${(item.price * item.quantity).toFixed(2)}
+                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                           </span>
                         </div>
                       ))}
@@ -997,19 +1069,25 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                   <div className="receipt-breakdown">
                     <div className="breakdown-row">
                       <span>Subtotal</span>
-                      <span>${subtotal.toFixed(2)}</span>
+                      <span>₹{subtotal.toLocaleString('en-IN')}</span>
                     </div>
+                    {promoDiscountAmt > 0 && (
+                      <div className="breakdown-row" style={{ color: '#22c55e', fontWeight: 600 }}>
+                        <span>Promo Discount ({appliedPromo?.code})</span>
+                        <span>-₹{promoDiscountAmt.toLocaleString('en-IN')}</span>
+                      </div>
+                    )}
                     <div className="breakdown-row">
-                      <span>Estimated Sales Tax (8%)</span>
-                      <span>${estimatedTax.toFixed(2)}</span>
+                      <span>Estimated GST (18%)</span>
+                      <span>₹{estimatedTax.toLocaleString('en-IN')}</span>
                     </div>
                     <div className="breakdown-row">
                       <span>Shipping Fee</span>
-                      <span>{shippingFee === 0 ? 'FREE' : `$${shippingFee.toFixed(2)}`}</span>
+                      <span>{shippingFee === 0 ? 'FREE' : `₹${shippingFee.toLocaleString('en-IN')}`}</span>
                     </div>
                     <div className="breakdown-row grand-total">
                       <span>Grand Total</span>
-                      <span>${totalAmount.toFixed(2)}</span>
+                      <span>₹{totalAmount.toLocaleString('en-IN')}</span>
                     </div>
                   </div>
                 </div>
@@ -1053,7 +1131,7 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                             <p className="summary-item-qty">Qty: {item.quantity}</p>
                           </div>
                         </div>
-                        <span className="summary-item-price">${(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="summary-item-price">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                       </div>
                     ))}
                   </div>
@@ -1061,20 +1139,75 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                   <div className="summary-breakdown">
                     <div className="breakdown-row">
                       <span>Subtotal</span>
-                      <span>${subtotal.toFixed(2)}</span>
+                      <span>₹{subtotal.toLocaleString('en-IN')}</span>
                     </div>
+                    {promoDiscountAmt > 0 && (
+                      <div className="breakdown-row" style={{ color: '#22c55e', fontWeight: 600 }}>
+                        <span>Promo Discount ({appliedPromo?.code})</span>
+                        <span>-₹{promoDiscountAmt.toLocaleString('en-IN')}</span>
+                      </div>
+                    )}
                     <div className="breakdown-row">
-                      <span>Estimated Tax (8%)</span>
-                      <span>${estimatedTax.toFixed(2)}</span>
+                      <span>Estimated GST (18%)</span>
+                      <span>₹{estimatedTax.toLocaleString('en-IN')}</span>
                     </div>
                     <div className="breakdown-row">
                       <span>Shipping</span>
-                      <span>{shippingFee === 0 ? 'FREE' : `$${shippingFee.toFixed(2)}`}</span>
+                      <span>{shippingFee === 0 ? 'FREE' : `₹${shippingFee.toLocaleString('en-IN')}`}</span>
                     </div>
                     <div className="breakdown-row total-row">
                       <span>Estimated Total</span>
-                      <span>${totalAmount.toFixed(2)}</span>
+                      <span>₹{totalAmount.toLocaleString('en-IN')}</span>
                     </div>
+                  </div>
+
+                  {/* Promo Code Input Block */}
+                  <div style={{ marginTop: '20px', borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
+                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', display: 'block', marginBottom: '8px', textAlign: 'left' }}>
+                      Apply Promo Code
+                    </label>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input 
+                        type="text"
+                        placeholder="e.g. WATCH15"
+                        value={promoInput}
+                        onChange={(e) => {
+                          setPromoInput(e.target.value.toUpperCase());
+                          setPromoError('');
+                        }}
+                        disabled={appliedPromo !== null}
+                        className="input-field"
+                        style={{ padding: '8px 12px', fontSize: '0.85rem', flexGrow: 1, textTransform: 'uppercase', background: 'var(--bg-surface-solid)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: '10px' }}
+                      />
+                      {appliedPromo ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAppliedPromo(null);
+                            setPromoInput('');
+                          }}
+                          className="btn btn-secondary"
+                          style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '0.85rem' }}
+                        >
+                          Remove
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={handleApplyPromo}
+                          className="btn btn-primary"
+                          style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '0.85rem' }}
+                        >
+                          Apply
+                        </button>
+                      )}
+                    </div>
+                    {promoError && (
+                      <p style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '6px', textAlign: 'left', fontWeight: 600 }}>{promoError}</p>
+                    )}
+                    {appliedPromo && (
+                      <p style={{ color: '#22c55e', fontSize: '0.75rem', marginTop: '6px', textAlign: 'left', fontWeight: 600 }}>✓ Code {appliedPromo.code} applied! Saved: ₹{promoDiscountAmt.toLocaleString('en-IN')}</p>
+                    )}
                   </div>
 
                   <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)' }}>

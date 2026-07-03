@@ -37,11 +37,11 @@ export default function App() {
       {
         id: 'AURA-5829104',
         date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        amount: 89.98,
+        amount: 7467.00,
         status: 'Delivered',
         items: [
-          { name: 'Aurora Glass Cup', quantity: 2, price: 19.99, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150&auto=format&fit=crop&q=60' },
-          { name: 'Cosmic Tea Leaves', quantity: 1, price: 49.99, image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=150&auto=format&fit=crop&q=60' }
+          { name: 'Aurora Glass Cup', quantity: 2, price: 1659.00, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150&auto=format&fit=crop&q=60' },
+          { name: 'Cosmic Tea Leaves', quantity: 1, price: 4149.00, image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=150&auto=format&fit=crop&q=60' }
         ],
         paymentMethod: 'card',
         cardBrand: 'visa',
@@ -50,10 +50,10 @@ export default function App() {
       {
         id: 'AURA-2194857',
         date: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        amount: 129.99,
+        amount: 10789.00,
         status: 'Delivered',
         items: [
-          { name: 'Nebula Coffee Beans', quantity: 1, price: 129.99, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150&auto=format&fit=crop&q=60' }
+          { name: 'Nebula Coffee Beans', quantity: 1, price: 10789.00, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150&auto=format&fit=crop&q=60' }
         ],
         paymentMethod: 'mobile_banking',
         upiProvider: 'gpay',

@@ -200,7 +200,7 @@ export default function CartDrawer({
                     <div style={{ flexGrow: 1, textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <h4 style={{ fontSize: '0.95rem', fontWeight: 700 }}>{item.name}</h4>
                       <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--accent-secondary)' }}>
-                        ${item.price.toFixed(2)}
+                        ₹{item.price.toLocaleString('en-IN')}
                       </span>
 
                       {/* Quantity Selector */}
@@ -281,7 +281,7 @@ export default function CartDrawer({
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Subtotal</span>
                   <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                    ${totalAmount.toFixed(2)}
+                    ₹{totalAmount.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <button
@@ -546,13 +546,13 @@ export default function CartDrawer({
                         {item.name} <strong style={{ color: 'var(--text-primary)' }}>x{item.quantity}</strong>
                       </span>
                       <span style={{ fontWeight: 600 }}>
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                       </span>
                     </div>
                   ))}
                   <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '10px', marginTop: '4px', display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
                     <span>Total Amount</span>
-                    <span style={{ color: 'var(--accent-secondary)' }}>${totalAmount.toFixed(2)}</span>
+                    <span style={{ color: 'var(--accent-secondary)' }}>₹{totalAmount.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>

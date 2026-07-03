@@ -514,7 +514,7 @@ export default function UserProfile({ user, orderHistory, loyaltyPoints, setLoya
                           <span className="badge badge-glow" style={{ fontSize: '0.75rem', padding: '2px 8px', background: order.status === 'Delivered' ? 'rgba(34, 211, 238, 0.1)' : 'rgba(99, 102, 241, 0.1)', color: order.status === 'Delivered' ? 'var(--accent-secondary)' : 'var(--accent-primary)', border: order.status === 'Delivered' ? '1px solid rgba(34, 211, 238, 0.2)' : '1px solid rgba(99, 102, 241, 0.2)' }}>
                             {order.status}
                           </span>
-                          <span className="order-price">${order.amount.toFixed(2)}</span>
+                          <span className="order-price">₹{order.amount.toLocaleString('en-IN')}</span>
                         </div>
                       </div>
 
@@ -526,7 +526,7 @@ export default function UserProfile({ user, orderHistory, loyaltyPoints, setLoya
                               <img src={item.image || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150'} alt={item.name} className="item-chip-img" />
                               <div style={{ textAlign: 'left' }}>
                                 <p className="item-name">{item.name}</p>
-                                <p className="item-qty">Qty: {item.quantity} × ${item.price.toFixed(2)}</p>
+                                 <p className="item-qty">Qty: {item.quantity} × ₹{item.price.toLocaleString('en-IN')}</p>
                               </div>
                             </div>
                           ))}
@@ -693,7 +693,7 @@ export default function UserProfile({ user, orderHistory, loyaltyPoints, setLoya
                 {/* Redeem Items list */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', borderBottom: '1px solid var(--border-color)', paddingBottom: '20px', marginBottom: '20px' }}>
                   {[
-                    { cost: 200, label: '$5 Shop Voucher', desc: 'Valid on all orders', prefix: 'AURA-DISC5' },
+                    { cost: 200, label: '₹500 Shop Voucher', desc: 'Valid on all orders', prefix: 'AURA-DISC5' },
                     { cost: 150, label: 'Free Shipping Coupon', desc: 'Saves shipping costs', prefix: 'AURA-SHIP' },
                     { cost: 600, label: 'Aura Premium Gift Box', desc: 'Mystery elite surprise', prefix: 'AURA-BOX' }
                   ].map((reward, rewardIdx) => (
@@ -814,7 +814,7 @@ export default function UserProfile({ user, orderHistory, loyaltyPoints, setLoya
                 {selectedReceipt.items.map((item, itemIdx) => (
                   <div key={itemIdx} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', borderRadius: '8px', fontSize: '0.85rem' }}>
                     <span>{item.name} <strong style={{ color: 'var(--accent-secondary)' }}>×{item.quantity}</strong></span>
-                    <span style={{ fontWeight: 700 }}>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span style={{ fontWeight: 700 }}>₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                   </div>
                 ))}
               </div>
@@ -823,11 +823,11 @@ export default function UserProfile({ user, orderHistory, loyaltyPoints, setLoya
               <div style={{ borderTop: '1px solid var(--border-color)', marginTop: '20px', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>Invoice Subtotal</span>
-                  <span>${selectedReceipt.amount.toFixed(2)}</span>
+                  <span>₹{selectedReceipt.amount.toLocaleString('en-IN')}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1rem', color: 'var(--accent-secondary)', borderTop: '1px dashed var(--border-color)', paddingTop: '10px', marginTop: '4px' }}>
                   <span>Grand Total Paid</span>
-                  <span>${selectedReceipt.amount.toFixed(2)}</span>
+                  <span>₹{selectedReceipt.amount.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
