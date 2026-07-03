@@ -362,3 +362,540 @@ h6 {
 section {
   scroll-margin-top: 80px;
 }
+
+/* Premium Ads Carousel & Animation Effects */
+.promo-banner-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto 30px auto;
+  padding: 1.5px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #38bdf8, #a855f7, #ec4899, #f97316, #38bdf8);
+  background-size: 400% 400%;
+  animation: logo-spin-gradient 12s ease infinite;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes logo-spin-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.promo-banner-glass {
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 16px;
+  min-height: 80px;
+}
+
+.promo-ad-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all var(--transition-normal);
+}
+
+.promo-slide {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-grow: 1;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: absolute;
+  left: 120px;
+  width: calc(100% - 370px);
+  pointer-events: none;
+}
+
+.promo-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  position: relative;
+  pointer-events: auto;
+  animation: pop-reveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pop-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+    filter: blur(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.promo-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin: 0;
+  background: linear-gradient(to right, #ffffff, #f1f5f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.01em;
+}
+
+.promo-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+.promo-code-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.promo-code-box:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.25);
+  transform: translateY(-1px);
+}
+
+.promo-code-box:active {
+  transform: translateY(1px);
+}
+
+.promo-code-text {
+  font-family: 'Outfit', monospace;
+  font-weight: 750;
+  color: var(--accent-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+.promo-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #10b981, #06b6d4, #10b981);
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px #06b6d4;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Custom Dragon and Firecracker reveals */
+.dragon-head-container {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 15;
+  pointer-events: none;
+}
+
+.dragon-head-container.hidden {
+  transform: translateY(-50%) translateX(-150px) scale(0.5) rotate(-25deg);
+  opacity: 0;
+}
+
+.dragon-head-container.active {
+  transform: translateY(-50%) translateX(0) scale(1) rotate(0deg);
+  opacity: 1;
+  animation: dragon-roar 0.6s ease-in-out;
+}
+
+@keyframes dragon-roar {
+
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0) scale(1) rotate(0);
+  }
+
+  20% {
+    transform: translateY(-50%) translateX(15px) scale(1.15) rotate(6deg);
+  }
+
+  40% {
+    transform: translateY(-50%) translateX(-5px) scale(1.05) rotate(-6deg);
+  }
+
+  60% {
+    transform: translateY(-50%) translateX(25px) scale(1.2) rotate(10deg);
+  }
+
+  80% {
+    transform: translateY(-50%) translateX(-2px) scale(1.08) rotate(-2deg);
+  }
+}
+
+.fireball-projectile {
+  position: absolute;
+  left: 90px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 10%, #ffeb3b 40%, #ff5722 70%, transparent 100%);
+  box-shadow: 0 0 20px #ff5722, 0 0 40px #ff9800, 0 0 60px #ff5722;
+  animation: shoot-fireball 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  z-index: 14;
+}
+
+@keyframes shoot-fireball {
+  0% {
+    left: 90px;
+    opacity: 1;
+    transform: translateY(-50%) scale(0.4);
+  }
+
+  100% {
+    left: 45%;
+    opacity: 0.9;
+    transform: translateY(-50%) scale(1.6);
+  }
+}
+
+.cracker-particle {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: explode-particle 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  z-index: 13;
+}
+
+@keyframes explode-particle {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    filter: brightness(2);
+  }
+
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.1);
+    opacity: 0;
+    filter: brightness(1);
+  }
+}
+
+.flash-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.35);
+  animation: flash-bg 0.4s ease-out forwards;
+  z-index: 12;
+  pointer-events: none;
+}
+
+@keyframes flash-bg {
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .promo-banner-glass {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 16px;
+    min-height: 160px;
+  }
+
+  .dragon-head-container {
+    left: 15px;
+    transform: translateY(-50%) scale(0.7);
+  }
+
+  .promo-slide {
+    position: relative;
+    left: 0;
+    width: 100%;
+    transform: none;
+    opacity: 1;
+    display: none;
+  }
+
+  .promo-slide.active {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .promo-banner-glass>div:last-child {
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+    position: relative;
+    z-index: 20;
+  }
+}
+
+/* Orbiting Dragon Animation */
+.orbiting-dragon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  pointer-events: none;
+  z-index: 15;
+  animation: dragon-orbit 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+@keyframes dragon-orbit {
+  0% {
+    transform: rotate(0deg) translateX(82px) rotate(85deg) scale(1.15) rotateY(0deg) translateY(0px);
+    z-index: 15;
+    /* In front of button */
+  }
+
+  25% {
+    transform: rotate(90deg) translateX(82px) rotate(90deg) scale(0.9) rotateY(25deg) translateY(-8px);
+    z-index: 5;
+    /* Behind button */
+  }
+
+  50% {
+    transform: rotate(180deg) translateX(82px) rotate(95deg) scale(0.65) rotateY(0deg) translateY(0px);
+    z-index: 5;
+    /* Behind button */
+  }
+
+  75% {
+    transform: rotate(270deg) translateX(82px) rotate(90deg) scale(0.9) rotateY(-25deg) translateY(8px);
+    z-index: 15;
+    /* In front of button */
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(82px) rotate(85deg) scale(1.15) rotateY(0deg) translateY(0px);
+    z-index: 15;
+    /* In front of button */
+  }
+}
+
+/* Cyberpunk Promobanner & Canvas Dragon Styles */
+.cyberpunk-banner-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto 30px auto;
+  padding: 1px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #090e24 0%, #150a2b 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.cyberpunk-banner-glass {
+  background: transparent;
+  border-radius: 15px;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  min-height: 140px;
+  z-index: 10;
+}
+
+.cyberpunk-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 14, 36, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 15px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cyberpunk-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cyberpunk-badge-frame {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid #a855f7;
+  color: #d8b4fe;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+  clip-path: polygon(0 0, 92% 0, 100% 30%, 100% 100%, 8% 100%, 0 70%);
+}
+
+.cyberpunk-code-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+}
+
+.cyberpunk-code-box:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+  transform: translateY(-2px);
+}
+
+.cyberpunk-code-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.2), transparent);
+  transform: skewX(-25deg);
+  transition: 0.75s;
+}
+
+.cyberpunk-code-box:hover::before {
+  left: 150%;
+}
+
+.cyberpunk-code-text {
+  font-family: 'Outfit', monospace;
+  font-weight: 800;
+  color: #06b6d4;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+}
+
+.cyberpunk-title {
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.cyberpunk-desc {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 6px 0 0 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .cyberpunk-banner-glass {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 20px;
+    min-height: 200px;
+  }
+
+  .cyberpunk-banner-glass>div:last-child {
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+}

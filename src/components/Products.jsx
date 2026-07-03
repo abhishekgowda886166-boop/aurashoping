@@ -5,7 +5,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 1,
     name: 'Aura Watch Pro',
-    price: 249.00,
+    price: 20499,
+    discount: 15,
     image: '/smartwatch.png',
     category: 'Electronics',
     rating: 4.8,
@@ -15,7 +16,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 2,
     name: 'Aura Sound Max',
-    price: 299.00,
+    price: 24799,
+    discount: 20,
     image: '/headphones.png',
     category: 'Electronics',
     rating: 4.9,
@@ -25,7 +27,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 3,
     name: 'Aura Phone Pro',
-    price: 899.00,
+    price: 74599,
+    discount: 10,
     image: '/phone.png',
     category: 'Electronics',
     rating: 4.9,
@@ -35,7 +38,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 4,
     name: 'Aura Band Active',
-    price: 79.00,
+    price: 6499,
+    discount: 25,
     image: '/fitness_band.png',
     category: 'Electronics',
     rating: 4.6,
@@ -45,7 +49,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 5,
     name: 'Aura Book Ultra',
-    price: 1499.00,
+    price: 124399,
+    discount: 12,
     image: '/laptop.png',
     category: 'Electronics',
     rating: 4.9,
@@ -55,7 +60,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 6,
     name: 'Aura Station X',
-    price: 1899.00,
+    price: 157599,
+    discount: 15,
     image: '/desktop_pc.png',
     category: 'Electronics',
     rating: 4.8,
@@ -65,7 +71,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 7,
     name: 'Aura View 34" Curved',
-    price: 499.00,
+    price: 41399,
+    discount: 18,
     image: '/monitor.png',
     category: 'Electronics',
     rating: 4.7,
@@ -75,7 +82,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 8,
     name: 'Aura Strike Mechanical',
-    price: 179.00,
+    price: 14799,
+    discount: 15,
     image: '/keyboard.png',
     category: 'Electronics',
     rating: 4.8,
@@ -85,7 +93,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 9,
     name: 'Aura Glide Elite Mouse',
-    price: 89.00,
+    price: 7299,
+    discount: 20,
     image: '/mouse.png',
     category: 'Electronics',
     rating: 4.8,
@@ -95,7 +104,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 10,
     name: 'Nomad Pack Pro',
-    price: 129.00,
+    price: 10699,
+    discount: 10,
     image: '/backpack.png',
     category: 'Gear',
     rating: 4.7,
@@ -105,7 +115,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 11,
     name: 'Aura Type mechanical',
-    price: 159.00,
+    price: 13199,
+    discount: 15,
     image: '/keyboard.png',
     category: 'Accessories',
     rating: 4.8,
@@ -115,7 +126,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 12,
     name: 'Aura Case Pro',
-    price: 29.00,
+    price: 2399,
+    discount: 30,
     image: '/phone_case.png',
     category: 'Accessories',
     rating: 4.7,
@@ -125,7 +137,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 13,
     name: 'Aura Link Cable',
-    price: 19.00,
+    price: 1599,
+    discount: 35,
     image: '/charging_cable.png',
     category: 'Accessories',
     rating: 4.8,
@@ -135,7 +148,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 14,
     name: 'Aura Glide Travel',
-    price: 39.00,
+    price: 3199,
+    discount: 20,
     image: '/travel_mouse.png',
     category: 'Accessories',
     rating: 4.7,
@@ -145,7 +159,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 15,
     name: 'Aura Hub 7-in-1',
-    price: 49.00,
+    price: 3999,
+    discount: 15,
     image: '/usb_hub.png',
     category: 'Accessories',
     rating: 4.8,
@@ -155,7 +170,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 16,
     name: 'Aura Drive 128GB',
-    price: 24.00,
+    price: 1999,
+    discount: 40,
     image: '/flash_drive.png',
     category: 'Accessories',
     rating: 4.6,
@@ -165,7 +181,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 17,
     name: 'Aura Flash 256GB',
-    price: 34.00,
+    price: 2799,
+    discount: 30,
     image: '/microsd_card.png',
     category: 'Accessories',
     rating: 4.8,
@@ -175,7 +192,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 18,
     name: 'Aura Buds Wired',
-    price: 29.00,
+    price: 2399,
+    discount: 25,
     image: '/wired_earphones.png',
     category: 'Accessories',
     rating: 4.5,
@@ -185,7 +203,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 19,
     name: 'Aura Strike Mouse',
-    price: 79.00,
+    price: 6499,
+    discount: 15,
     image: '/mouse.png',
     category: 'Gear',
     rating: 4.8,
@@ -195,7 +214,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 20,
     name: 'Aura Strike Keyboard',
-    price: 169.00,
+    price: 13999,
+    discount: 12,
     image: '/keyboard.png',
     category: 'Gear',
     rating: 4.9,
@@ -205,7 +225,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 21,
     name: 'Aura Freeze Pad',
-    price: 45.00,
+    price: 3699,
+    discount: 20,
     image: '/laptop.png',
     category: 'Gear',
     rating: 4.7,
@@ -215,7 +236,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 22,
     name: 'Aura Dock Station',
-    price: 89.00,
+    price: 7299,
+    discount: 15,
     image: '/usb_hub.png',
     category: 'Gear',
     rating: 4.8,
@@ -225,7 +247,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 23,
     name: 'Aura Pods Active',
-    price: 119.00,
+    price: 9799,
+    discount: 22,
     image: '/headphones.png',
     category: 'Gear',
     rating: 4.8,
@@ -235,7 +258,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 24,
     name: 'Aura Focus 50mm',
-    price: 349.00,
+    price: 28999,
+    discount: 10,
     image: '/smartwatch.png',
     category: 'Gear',
     rating: 4.9,
@@ -245,7 +269,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 25,
     name: 'Aura Power 20K',
-    price: 59.00,
+    price: 4899,
+    discount: 25,
     image: '/phone_case.png',
     category: 'Gear',
     rating: 4.8,
@@ -255,7 +280,8 @@ const INITIAL_PRODUCTS = [
   {
     id: 26,
     name: 'Aura Charge 65W GaN',
-    price: 39.00,
+    price: 3199,
+    discount: 20,
     image: '/charging_cable.png',
     category: 'Gear',
     rating: 4.8,
@@ -297,7 +323,12 @@ export default function Products({
     selectedProductIds.forEach(id => {
       const prod = INITIAL_PRODUCTS.find(p => p.id === id);
       if (prod) {
-        onAddToCart(prod, localQuantities[id] || 1);
+        const discountedPrice = Math.round(prod.price * (1 - (prod.discount || 0) / 100));
+        onAddToCart({
+          ...prod,
+          price: discountedPrice,
+          originalPrice: prod.price
+        }, localQuantities[id] || 1);
       }
     });
     setSelectedProductIds([]);
@@ -310,9 +341,9 @@ export default function Products({
 
     let matchesPrice = true;
     if (priceRange === 'under-150') {
-      matchesPrice = product.price < 150;
+      matchesPrice = product.price < 10000;
     } else if (priceRange === 'above-150') {
-      matchesPrice = product.price >= 150;
+      matchesPrice = product.price >= 10000;
     }
 
     return matchesSearch && matchesCategory && matchesPrice;
@@ -464,8 +495,8 @@ export default function Products({
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', height: '46px', alignItems: 'center', justifyContent: 'center' }}>
               {[
                 { id: 'All', label: 'All Prices' },
-                { id: 'under-150', label: 'Under $150' },
-                { id: 'above-150', label: 'Over $150' }
+                { id: 'under-150', label: 'Under ₹10,000' },
+                { id: 'above-150', label: 'Over ₹10,000' }
               ].map((range) => (
                 <label
                   key={range.id}
@@ -679,15 +710,27 @@ export default function Products({
                     <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>
                       {product.name}
                     </h3>
-                    <span
-                      style={{
-                        fontSize: '1.25rem',
-                        fontWeight: 800,
-                        color: 'var(--accent-secondary)'
-                      }}
-                    >
-                      ${product.price.toFixed(2)}
-                    </span>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+                      {product.discount > 0 && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ fontSize: '0.85rem', textDecoration: 'line-through', color: 'var(--text-muted)' }}>
+                            ₹{product.price.toLocaleString('en-IN')}
+                          </span>
+                          <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#ef4444', background: 'rgba(239, 68, 68, 0.15)', padding: '1px 5px', borderRadius: '4px' }}>
+                            {product.discount}% OFF
+                          </span>
+                        </div>
+                      )}
+                      <span
+                        style={{
+                          fontSize: '1.25rem',
+                          fontWeight: 800,
+                          color: 'var(--accent-secondary)'
+                        }}
+                      >
+                        ₹{Math.round(product.price * (1 - (product.discount || 0) / 100)).toLocaleString('en-IN')}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Rating */}
@@ -752,7 +795,14 @@ export default function Products({
 
                   {/* Action Button */}
                   <button
-                    onClick={() => onAddToCart(product, localQuantities[product.id] || 1)}
+                    onClick={() => {
+                      const discountedPrice = Math.round(product.price * (1 - (product.discount || 0) / 100));
+                      onAddToCart({
+                        ...product,
+                        price: discountedPrice,
+                        originalPrice: product.price
+                      }, localQuantities[product.id] || 1);
+                    }}
                     className="btn btn-primary"
                     style={{
                       width: '100%',
@@ -836,7 +886,7 @@ export default function Products({
             <button
               onClick={() => setSelectedProductIds([])}
               className="btn btn-secondary"
-              style={{ padding: '5px 15px', fontSize: '0.60rem', borderRadius: '8px' }}
+              style={{ padding: '10px 22px', fontSize: '0.80rem', borderRadius: '12px' }}
             >
               Cancel
             </button>
@@ -844,9 +894,9 @@ export default function Products({
               onClick={handleAddSelectedToCart}
               className="btn btn-primary"
               style={{
-                padding: '5px 15px',
-                fontSize: '0.60rem',
-                borderRadius: '8px',
+                padding: '10px 22px',
+                fontSize: '0.80rem',
+                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px'

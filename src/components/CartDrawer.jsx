@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, CheckCircle, MapPin } from 'lucide-react';
+import { GPayIcon, PhonePeIcon, PaytmIcon } from './PaymentLogos';
+
 
 export default function CartDrawer({
   isOpen,
@@ -7,7 +9,8 @@ export default function CartDrawer({
   cartItems,
   onUpdateQuantity,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  onCheckout
 }) {
   const [checkoutStep, setCheckoutStep] = useState('idle'); // idle, address, confirm, processing, success
   const [paymentMethod, setPaymentMethod] = useState('mobile_banking');
@@ -28,7 +31,11 @@ export default function CartDrawer({
   const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleStartCheckout = () => {
-    setCheckoutStep('address');
+    if (onCheckout) {
+      onCheckout();
+    } else {
+      setCheckoutStep('address');
+    }
   };
 
   const handleAddressSubmit = () => {
@@ -193,7 +200,7 @@ export default function CartDrawer({
                     <div style={{ flexGrow: 1, textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <h4 style={{ fontSize: '0.95rem', fontWeight: 700 }}>{item.name}</h4>
                       <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--accent-secondary)' }}>
-                        ${item.price.toFixed(2)}
+                        ₹{item.price.toLocaleString('en-IN')}
                       </span>
 
                       {/* Quantity Selector */}
@@ -274,7 +281,7 @@ export default function CartDrawer({
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Subtotal</span>
                   <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                    ${totalAmount.toFixed(2)}
+                    ₹{totalAmount.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <button
@@ -539,13 +546,13 @@ export default function CartDrawer({
                         {item.name} <strong style={{ color: 'var(--text-primary)' }}>x{item.quantity}</strong>
                       </span>
                       <span style={{ fontWeight: 600 }}>
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                       </span>
                     </div>
                   ))}
                   <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '10px', marginTop: '4px', display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
                     <span>Total Amount</span>
-                    <span style={{ color: 'var(--accent-secondary)' }}>${totalAmount.toFixed(2)}</span>
+                    <span style={{ color: 'var(--accent-secondary)' }}>₹{totalAmount.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>
@@ -678,16 +685,25 @@ export default function CartDrawer({
                         onClick={() => setUpiProvider(prov.id)}
                         className="btn"
                         style={{
-                          padding: '10px 0',
+                          padding: '12px 6px',
                           borderRadius: '10px',
-                          fontSize: '0.85rem',
-                          fontWeight: 600,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
                           backgroundColor: upiProvider === prov.id ? 'var(--accent-primary)' : 'var(--bg-surface)',
                           borderColor: upiProvider === prov.id ? 'var(--accent-primary)' : 'var(--border-color)',
-                          color: upiProvider === prov.id ? '#ffffff' : 'var(--text-secondary)'
+                          color: upiProvider === prov.id ? '#ffffff' : 'var(--text-secondary)',
+                          transition: 'all 0.2s ease'
                         }}
                       >
-                        {prov.label}
+                        {prov.id === 'gpay' && <GPayIcon size={18} color={upiProvider === 'gpay' ? '#ffffff' : 'var(--text-muted)'} />}
+                        {prov.id === 'phonepe' && <PhonePeIcon size={18} color={upiProvider === 'phonepe' ? '#ffffff' : 'var(--text-muted)'} />}
+                        {prov.id === 'paytm' && <PaytmIcon size={18} color={upiProvider === 'paytm' ? '#ffffff' : 'var(--text-muted)'} />}
+                        <span>{prov.label}</span>
                       </button>
                     ))}
                   </div>

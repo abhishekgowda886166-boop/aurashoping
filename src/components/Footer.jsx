@@ -1,5 +1,7 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
+import { GPayIcon, PhonePeIcon, PaytmIcon } from './PaymentLogos';
+
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -51,7 +53,26 @@ export default function Footer() {
             gap: '12px'
           }}
         >
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+          {/* Accepted Payments */}
+          <div 
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginBottom: '4px'
+            }}
+          >
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: '4px' }}>
+              We Accept:
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', opacity: 0.7 }}>
+              <GPayIcon size={16} color="var(--text-muted)" />
+              <PhonePeIcon size={16} color="var(--text-muted)" />
+              <PaytmIcon size={16} color="var(--text-muted)" />
+            </div>
+          </div>
+
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>
             © {new Date().getFullYear()} AuraShop. All rights reserved. Crafted for visual excellence.
           </p>
           <div style={{ display: 'flex', gap: '16px' }}>

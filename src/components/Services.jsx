@@ -6,7 +6,7 @@ const SERVICES_DATA = [
     id: 1,
     icon: <Truck size={32} style={{ color: 'var(--accent-secondary)' }} />,
     title: 'Free Express Delivery',
-    description: 'Get your orders delivered to your doorstep within 2-3 business days absolutely free for orders over $99.'
+    description: 'Get your orders delivered to your doorstep within 2-3 business days absolutely free for orders over ₹8,000.'
   },
   {
     id: 2,

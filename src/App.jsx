@@ -5,32 +5,89 @@ import Products from './components/Products';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Login from './components/Login';
+import CheckoutWizard from './components/CheckoutWizard';
+import UserProfile from './components/UserProfile';
 import CartDrawer from './components/CartDrawer';
 import Footer from './components/Footer';
 
 export default function App() {
-  const [page, setPage] = useState('home'); // 'home', 'products', 'services', 'contact', 'login'
+  const [page, setPage] = useState('home'); // 'home', 'products', 'services', 'contact', 'login', 'checkout', 'profile'
 
   // Shared filter states
-  const [searchQuery, setSearchQuery]     = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [priceRange, setPriceRange]       = useState('All');
+  const [priceRange, setPriceRange] = useState('All');
 
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem('aura_cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [theme, setTheme]           = useState('dark');
+  const [theme, setTheme] = useState('dark');
   const [activeSection, setActiveSection] = useState('home');
 
   // Auth state
   const [user, setUser] = useState(() => localStorage.getItem('aura_user') || null);
 
-  // Sync cart to localStorage
+  // Order History & Loyalty Points states
+  const [orderHistory, setOrderHistory] = useState(() => {
+    const savedHistory = localStorage.getItem('aura_order_history');
+    if (savedHistory) return JSON.parse(savedHistory);
+    return [
+      {
+        id: 'AURA-5829104',
+        date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        amount: 7467.00,
+        status: 'Delivered',
+        items: [
+          { name: 'Aurora Glass Cup', quantity: 2, price: 1659.00, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150&auto=format&fit=crop&q=60' },
+          { name: 'Cosmic Tea Leaves', quantity: 1, price: 4149.00, image: 'https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=150&auto=format&fit=crop&q=60' }
+        ],
+        paymentMethod: 'card',
+        cardBrand: 'visa',
+        cardLast4: '4242'
+      },
+      {
+        id: 'AURA-2194857',
+        date: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        amount: 10789.00,
+        status: 'Delivered',
+        items: [
+          { name: 'Nebula Coffee Beans', quantity: 1, price: 10789.00, image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150&auto=format&fit=crop&q=60' }
+        ],
+        paymentMethod: 'mobile_banking',
+        upiProvider: 'gpay',
+        upiDetails: 'alex@upi'
+      }
+    ];
+  });
+
+  const [loyaltyPoints, setLoyaltyPoints] = useState(() => {
+    const savedPoints = localStorage.getItem('aura_loyalty_points');
+    return savedPoints ? parseInt(savedPoints, 10) : 750;
+  });
+
+  const [profilePic, setProfilePic] = useState(() => {
+    try {
+      const saved = localStorage.getItem('aura_user_profile');
+      return saved ? JSON.parse(saved).profilePic || null : null;
+    } catch {
+      return null;
+    }
+  });
+
+  // Sync states to localStorage
   useEffect(() => {
     localStorage.setItem('aura_cart', JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    localStorage.setItem('aura_order_history', JSON.stringify(orderHistory));
+  }, [orderHistory]);
+
+  useEffect(() => {
+    localStorage.setItem('aura_loyalty_points', loyaltyPoints.toString());
+  }, [loyaltyPoints]);
 
   // Theme class on <html>
   useEffect(() => {
@@ -84,7 +141,7 @@ export default function App() {
   };
 
   const handleRemoveItem = (id) => setCart(prev => prev.filter(item => item.id !== id));
-  const handleClearCart  = ()  => setCart([]);
+  const handleClearCart = () => setCart([]);
   const handleThemeToggle = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   /* ── Auth ── */
@@ -102,7 +159,7 @@ export default function App() {
 
   /* ── Navigation ── */
   const handlePageNavigation = (targetPage) => {
-    if (targetPage === 'products' && !user) {
+    if ((targetPage === 'products' || targetPage === 'profile' || targetPage === 'checkout') && !user) {
       setPage('login');
       return;
     }
@@ -139,6 +196,7 @@ export default function App() {
         onNavigate={handlePageNavigation}
         user={user}
         onLogout={handleLogout}
+        profilePic={profilePic}
       />
 
       {/* Pages */}
@@ -178,6 +236,30 @@ export default function App() {
             onBackToHome={() => handlePageNavigation('home')}
           />
         )}
+        {page === 'checkout' && (
+          <CheckoutWizard
+            cartItems={cart}
+            onClearCart={handleClearCart}
+            onNavigate={handlePageNavigation}
+            onOrderPlaced={(order) => {
+              setOrderHistory(prev => [order, ...prev]);
+              setLoyaltyPoints(p => p + Math.round(order.amount));
+            }}
+          />
+        )}
+        {page === 'profile' && (
+          <UserProfile
+            user={user}
+            orderHistory={orderHistory}
+            loyaltyPoints={loyaltyPoints}
+            setLoyaltyPoints={setLoyaltyPoints}
+            onNavigate={handlePageNavigation}
+            profilePic={profilePic}
+            onProfileUpdate={(newProfile) => {
+              setProfilePic(newProfile.profilePic || null);
+            }}
+          />
+        )}
       </main>
 
       {/* Footer */}
@@ -191,6 +273,10 @@ export default function App() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         onClearCart={handleClearCart}
+        onCheckout={() => {
+          setIsCartOpen(false);
+          handlePageNavigation('checkout');
+        }}
       />
     </div>
   );

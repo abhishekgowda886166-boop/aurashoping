@@ -10,7 +10,8 @@ export default function Header({
   page,
   onNavigate,
   user,
-  onLogout
+  onLogout,
+  profilePic
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -291,7 +292,7 @@ export default function Header({
                   width: '38px',
                   height: '38px',
                   borderRadius: '50%',
-                  background: 'var(--accent-gradient)',
+                  background: profilePic ? `url(${profilePic}) center/cover no-repeat` : 'var(--accent-gradient)',
                   border: '2px solid var(--accent-primary)',
                   display: 'flex',
                   alignItems: 'center',
@@ -302,10 +303,11 @@ export default function Header({
                   fontSize: '0.95rem',
                   letterSpacing: '0.02em',
                   boxShadow: showProfile ? '0 0 12px var(--accent-primary)' : 'none',
-                  transition: 'all var(--transition-fast)'
+                  transition: 'all var(--transition-fast)',
+                  overflow: 'hidden'
                 }}
               >
-                {user.charAt(0).toUpperCase()}
+                {!profilePic && user.charAt(0).toUpperCase()}
               </button>
 
               {/* Profile Dropdown */}
@@ -342,7 +344,7 @@ export default function Header({
                         width: '46px',
                         height: '46px',
                         borderRadius: '50%',
-                        background: 'var(--accent-gradient)',
+                        background: profilePic ? `url(${profilePic}) center/cover no-repeat` : 'var(--accent-gradient)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -350,10 +352,11 @@ export default function Header({
                         fontWeight: 800,
                         fontSize: '1.2rem',
                         flexShrink: 0,
-                        boxShadow: '0 0 10px rgba(34,211,238,0.3)'
+                        boxShadow: '0 0 10px rgba(34,211,238,0.3)',
+                        overflow: 'hidden'
                       }}
                     >
-                      {user.charAt(0).toUpperCase()}
+                      {!profilePic && user.charAt(0).toUpperCase()}
                     </div>
                     <div style={{ textAlign: 'left' }}>
                       <p style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>
@@ -381,6 +384,34 @@ export default function Header({
                       <User size={15} style={{ color: 'var(--accent-primary)' }} />
                       <span>Signed in as <strong style={{ color: 'var(--text-primary)' }}>@{user}</strong></span>
                     </div>
+
+                     <button
+                      onClick={() => {
+                        setShowProfile(false);
+                        onNavigate('profile');
+                      }}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 12px',
+                        borderRadius: '10px',
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--text-secondary)',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'background var(--transition-fast)'
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-surface-hover)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                    >
+                      <User size={15} style={{ color: 'var(--accent-secondary)' }} />
+                      Account Profile
+                    </button>
 
                     <button
                       onClick={() => {

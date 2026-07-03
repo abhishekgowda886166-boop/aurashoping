@@ -117,8 +117,8 @@ export default function HomeFilterBar({ onSearch }) {
           >
             {[
               { id: 'All', label: 'All Prices' },
-              { id: 'under-150', label: 'Under $150' },
-              { id: 'above-150', label: 'Over $150' }
+              { id: 'under-150', label: 'Under ₹10,000' },
+              { id: 'above-150', label: 'Over ₹10,000' }
             ].map((range) => (
               <label 
                 key={range.id}
