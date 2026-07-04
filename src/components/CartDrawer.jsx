@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, CheckCircle, MapPin } from 'lucide-react';
+import { GPayIcon, PhonePeIcon, PaytmIcon } from './PaymentLogos';
+
 
 export default function CartDrawer({
   isOpen,
@@ -683,16 +685,25 @@ export default function CartDrawer({
                         onClick={() => setUpiProvider(prov.id)}
                         className="btn"
                         style={{
-                          padding: '10px 0',
+                          padding: '12px 6px',
                           borderRadius: '10px',
-                          fontSize: '0.85rem',
-                          fontWeight: 600,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
                           backgroundColor: upiProvider === prov.id ? 'var(--accent-primary)' : 'var(--bg-surface)',
                           borderColor: upiProvider === prov.id ? 'var(--accent-primary)' : 'var(--border-color)',
-                          color: upiProvider === prov.id ? '#ffffff' : 'var(--text-secondary)'
+                          color: upiProvider === prov.id ? '#ffffff' : 'var(--text-secondary)',
+                          transition: 'all 0.2s ease'
                         }}
                       >
-                        {prov.label}
+                        {prov.id === 'gpay' && <GPayIcon size={18} color={upiProvider === 'gpay' ? '#ffffff' : 'var(--text-muted)'} />}
+                        {prov.id === 'phonepe' && <PhonePeIcon size={18} color={upiProvider === 'phonepe' ? '#ffffff' : 'var(--text-muted)'} />}
+                        {prov.id === 'paytm' && <PaytmIcon size={18} color={upiProvider === 'paytm' ? '#ffffff' : 'var(--text-muted)'} />}
+                        <span>{prov.label}</span>
                       </button>
                     ))}
                   </div>

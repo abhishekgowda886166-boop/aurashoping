@@ -4,6 +4,8 @@ import {
   ArrowLeft, ArrowRight, ShieldCheck, ShoppingBag, Sparkles, Check,
   Smartphone, Wallet
 } from 'lucide-react';
+import { GPayIcon, PhonePeIcon, PaytmIcon } from './PaymentLogos';
+
 
 export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onOrderPlaced }) {
   const [step, setStep] = useState(1); // 1: Shipping, 2: Payment, 3: Receipt/Tracker
@@ -660,10 +662,10 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                         <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Select UPI App</label>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
                           {[
-                            { id: 'gpay', name: 'GPay', iconText: 'G' },
-                            { id: 'phonepe', name: 'PhonePe', iconText: 'P' },
-                            { id: 'paytm', name: 'Paytm', iconText: 'Pay' },
-                            { id: 'bhim', name: 'BHIM', iconText: 'B' }
+                            { id: 'gpay', name: 'GPay' },
+                            { id: 'phonepe', name: 'PhonePe' },
+                            { id: 'paytm', name: 'Paytm' },
+                            { id: 'bhim', name: 'BHIM' }
                           ].map(provider => (
                             <button
                               key={provider.id}
@@ -678,23 +680,33 @@ export default function CheckoutWizard({ cartItems, onClearCart, onNavigate, onO
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                gap: '6px',
+                                gap: '8px',
                                 borderRadius: '12px',
                                 fontSize: '0.75rem',
                                 fontWeight: 700
                               }}
                             >
                               <div style={{
-                                width: '24px',
-                                height: '24px',
+                                width: '32px',
+                                height: '32px',
                                 borderRadius: '50%',
-                                background: upiProvider === provider.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.06)',
+                                background: upiProvider === provider.id ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.03)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                fontWeight: 800
+                                transition: 'all 0.2s ease',
+                                flexShrink: 0
                               }}>
-                                {provider.iconText[0]}
+                                {provider.id === 'gpay' && <GPayIcon size={20} color={upiProvider === 'gpay' ? '#ffffff' : 'var(--text-muted)'} />}
+                                {provider.id === 'phonepe' && <PhonePeIcon size={20} color={upiProvider === 'phonepe' ? '#a966ff' : 'var(--text-muted)'} />}
+                                {provider.id === 'paytm' && <PaytmIcon size={20} color={upiProvider === 'paytm' ? '#00baf2' : 'var(--text-muted)'} />}
+                                {provider.id === 'bhim' && (
+                                  <span style={{ 
+                                    fontWeight: 800, 
+                                    fontSize: '0.85rem', 
+                                    color: upiProvider === 'bhim' ? '#ff9933' : 'var(--text-muted)' 
+                                  }}>B</span>
+                                )}
                               </div>
                               <span>{provider.name}</span>
                             </button>
